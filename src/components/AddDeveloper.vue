@@ -5,7 +5,7 @@
       <input v-model="developer.username" type="text" placeholder="GitHub Username" class="form-control">
     </div>
     <div class="form-group">
-      <input v-model="developer.price" type="number" placeholder="Price" class="form-control">
+      <input v-model="developer.price" type="text" placeholder="Price" class="form-control">
     </div>
     <button type="submit" class="btn btn-success">Add</button>
   </form>
@@ -17,16 +17,15 @@
       return {
         developer: {
           username: '',
-          price: 0
+          price: ''
         }
       };
     },
     methods: {
       add () {
-        this.$parent.developers.push(Object.freeze(this.developer));
+        this.$dispatch('addDeveloper', Object.assign({}, this.developer))
         this.developer.username = '';
-        this.developer.price = 0;
-        console.log(this.$parent.developers);
+        this.developer.price = '';
       }
     }
   }

@@ -45,6 +45,14 @@ import TotalResult from './components/TotalResult.vue';
         ]
       }
     },
+    events: {
+      removeDeveloper (dev) {
+        this.developers.$remove(dev);
+      },
+      addDeveloper (dev) {
+        this.developers = this.developers.concat(dev);
+      }
+    },
     components: { AddDeveloper, UserList, TotalResult }
   }
 </script>
