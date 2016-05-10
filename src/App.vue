@@ -11,7 +11,8 @@
 
     <div class="cart row">
       <h2>Cart</h2>
-      <user-list :developers="developers"></user-list>
+      <user-list v-show="developers.length" :developers="developers"></user-list>
+      <p v-else>Insire um desenvolvedor acima</p>
     </div>
 
     <div class="totalizer row">
@@ -29,28 +30,43 @@
 import AddDeveloper from './components/AddDeveloper.vue';
 import UserList from './components/UserList.vue';
 import TotalResult from './components/TotalResult.vue';
+import LocalStorage from './services/localStorage';
 
   export default {
+    created () {
+      console.log('created!');
+    },
+    ready () {
+      this.getAllDevelopers();
+      console.log('Ready!');
+    },
     data () {
       return {
-        developers: [
-          {
-            username: 'Quaggie',
-            price: 100
-          },
-          {
-            username: 'Delpp',
-            price: 120
-          }
-        ]
+        developers: []
+      }
+    },
+    methods: {
+      getAllDevelopers () {
+        LocalStorage.getAll()
+        .then( (devs) => this.developers = devs)
+        .catch( (err) => console.error(err) );
+      },
+      removeAllDevelopers () {
+        LocalStorage.removeAll()
+        .then( (devs) => this.developers = [])
+        .catch( (err) => console.error(err) );
       }
     },
     events: {
       removeDeveloper (dev) {
-        this.developers.$remove(dev);
+        LocalStorage.remove(dev)
+        .then( () => this.developers.$remove(dev))
+        .catch( (err) => console.error(err) );
       },
       addDeveloper (dev) {
-        this.developers = this.developers.concat(dev);
+        LocalStorage.save(dev)
+        .then( () => this.developers = this.developers.concat(dev).sort())
+        .catch( (err) => console.error(err) );
       }
     },
     components: { AddDeveloper, UserList, TotalResult }
