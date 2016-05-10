@@ -11,8 +11,12 @@
 
     <div class="cart row">
       <h2>Cart</h2>
-      <user-list v-show="developers.length" :developers="developers"></user-list>
-      <p v-else>Insire um desenvolvedor acima</p>
+      <div v-show="developers.length">
+        <user-list :developers="developers"></user-list>
+      </div>
+      <div v-else>
+        <p>Insira um desenvolvedor acima</p>
+      </div>
     </div>
 
     <div class="totalizer row">
@@ -67,6 +71,9 @@ import LocalStorage from './services/localStorage';
         LocalStorage.save(dev)
         .then( () => this.developers = this.developers.concat(dev).sort())
         .catch( (err) => console.error(err) );
+      },
+      showInfo (dev) {
+        console.log(dev.username, dev.price, dev.imageUrl);
       }
     },
     components: { AddDeveloper, UserList, TotalResult }
