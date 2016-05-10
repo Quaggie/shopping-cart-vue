@@ -53,24 +53,24 @@ import LocalStorage from './services/localStorage';
       getAllDevelopers () {
         LocalStorage.getAll()
         .then( (devs) => this.developers = devs)
-        .catch( (err) => console.error(err) );
+        .catch( (err) => this.$broadcast('errorAlert', err) );
       },
       removeAllDevelopers () {
         LocalStorage.removeAll()
         .then( (devs) => this.developers = [])
-        .catch( (err) => console.error(err) );
+        .catch( (err) => this.$broadcast('errorAlert', err) );
       }
     },
     events: {
       removeDeveloper (dev) {
         LocalStorage.remove(dev)
         .then( () => this.developers.$remove(dev))
-        .catch( (err) => console.error(err) );
+        .catch( (err) => this.$broadcast('errorAlert', err) );
       },
       addDeveloper (dev) {
         LocalStorage.save(dev)
         .then( () => this.developers = this.developers.concat(dev).sort())
-        .catch( (err) => console.error(err) );
+        .catch( (err) => this.$broadcast('errorAlert', err) );
       },
       showInfo (dev) {
         console.log(dev.username, dev.price, dev.imageUrl);

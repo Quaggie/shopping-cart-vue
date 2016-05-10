@@ -1,4 +1,18 @@
 <template>
+
+  <alert
+    :show.sync="showError"
+    :duration="4000"
+    type="danger"
+    width="350px"
+    placement="top-right"
+    dismissable
+  >
+    <span class="icon-ok-circled alert-icon-float-left"></span>
+    <strong>Ops!</strong>
+    <p>{{ message }}</p>
+  </alert>
+
   <h2>Add a developer</h2>
   <form class="form-inline" role="form" @submit.prevent="add">
     <div class="form-group">
@@ -9,23 +23,23 @@
 </template>
 
 <script>
-  import Vue from 'vue';
+  import { alert } from 'vue-strap';
 
   export default {
-    ready () {
-    },
     data () {
       return {
-        developer: ''
+        developer: '',
+        showError: false,
+        message: ''
       };
     },
     methods: {
       add () {
-        Vue.http.get(`https://api.github.com/search/users?q=${this.developer}`)
+        this.$http.get(`https://api.github.com/search/users?q=${this.developer}`)
         .then( (result) => {
           const json = result.data;
           const user = (json.items ? json.items.length : undefined) ? json.items[0] : {};
-          if (!user.login) throw new Error('Usuário não achado!');
+          if (!user.login) throw 'Parece que este desenvolvedor não existe';
 
           const dev = {
             username: user.login,
@@ -36,8 +50,15 @@
           this.$dispatch('addDeveloper', Object.assign({}, dev))
           this.developer = '';
         })
-        .catch( (err) => console.log(err));
+        .catch( (err) => this.$emit('errorAlert', err) );
       }
-    }
+    },
+    events: {
+      errorAlert (msg) {
+        this.showError = true;
+        this.message = msg || '';
+      }
+    },
+    components: { alert }
   }
 </script>
