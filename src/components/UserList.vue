@@ -8,8 +8,8 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
-      <tr @click="developerInfo(developer)" class="product" v-for="developer in developers" orderBy="developer.username" track-by="$index">
+    <tbody class="point">
+      <tr @click="goToDevPage(developer)" class="product" v-for="developer in developers" orderBy="developer.username" track-by="$index">
         <td><img :src="developer.imageUrl" class="img-circle small-pic"></td>
         <td>{{developer.username}}</td>
         <td>{{developer.price | currency}}</td>
@@ -28,6 +28,11 @@
         removeDeveloper,
         editDeveloper,
         developerInfo
+      }
+    },
+    methods: {
+      goToDevPage (devel) {
+        this.$router.go({ name: 'devPage', params: { dev: devel.username }})
       }
     },
     props: {
@@ -52,5 +57,8 @@
 <style media="screen">
   .small-pic {
     height: 33px;
+  }
+  .point {
+    cursor: pointer;
   }
 </style>

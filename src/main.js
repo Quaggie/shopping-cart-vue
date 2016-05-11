@@ -1,12 +1,31 @@
 import Vue from 'vue';
-import App from './App.vue';
 import vueResource from 'vue-resource';
-import store from './vuex/store';
+import VueRouter from 'vue-router';
+import App from './App.vue';
+import Cart from './components/Cart.vue';
+import DevPage from './components/DevPage.vue';
 
 Vue.use(vueResource);
+Vue.use(VueRouter);
 
-new Vue({
-  store,
-  el: 'body',
-  components: { App }
+const router = new VueRouter({
+  history: true,
+  scrollPosition: true
 });
+
+router.map({
+  '/cart': {
+    name: 'cart',
+    component: Cart
+  },
+  '/dev/:dev': {
+    name: 'devPage',
+    component: DevPage
+  }
+});
+
+router.redirect({
+  '*': '/cart'
+})
+
+router.start(App, 'body')

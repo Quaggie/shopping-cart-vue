@@ -1,19 +1,19 @@
 <template>
-  <h1>Dev</h1>
+  <h1>{{ developer.username }}</h1>
+  <h2>{{ developer.price | currency }}</h2>
+  <img :src="developer.imageUrl">
 </template>
 
 <script>
   export default {
-    data () {
-      dev: {}
+    vuex: {
+      getters: {
+        developers: ({cart}) => cart.developers
+      }
     },
-    route: {
-      data ({ to }) {
-        document.title = to.params.dev;
-        console.log(to.params.dev);
-        return {
-          dev: to.params.dev
-        }
+    computed: {
+      developer () {
+        return this.developers.find( ({username}) => username === this.$route.params.dev);
       }
     }
   }
