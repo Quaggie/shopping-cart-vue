@@ -5,13 +5,14 @@ function makeAction (type) {
   return ({ dispatch }, ...args) => dispatch(type, ...args)
 }
 
+export const getAllDevelopers = makeAction('GET_ALL_DEVELOPERS');
 export const developerInfo = makeAction('DEVELOPER_INFO');
 export const removeDeveloper = makeAction('REMOVE_DEVELOPER');
 export const editDeveloper = makeAction('EDIT_DEVELOPER');
 export const removeAllDevelopers = makeAction('REMOVE_ALL_DEVELOPERS');
 
 export const addDeveloper = (store, developer) => {
-  if (!developer.trim()) return store.dispatch('SEND_ERROR_MESSAGE', 'Digite um nome.');
+  if (!developer.trim()) return store.dispatch({ type:'SEND_ERROR_MESSAGE', payload: 'Digite um nome.'});
 
   return Vue.http.get(`https://api.github.com/search/users?q=${developer}`)
   .then( (result) => {
@@ -27,10 +28,19 @@ export const addDeveloper = (store, developer) => {
       imageUrl: user.avatar_url
     };
     // Sending it to the store
-    store.dispatch('ADD_DEVELOPER', dev);
-    store.dispatch('UPDATE_NEW_DEVELOPER', '');
+    store.dispatch({
+      type: 'ADD_DEVELOPER',
+      payload: dev
+    });
+    store.dispatch({
+      type: 'UPDATE_NEW_DEVELOPER',
+      payload:''
+    });
   })
   .catch( (err) => {
-    store.dispatch('SEND_ERROR_MESSAGE', err);
+    store.dispatch({
+      type: 'SEND_ERROR_MESSAGE',
+      payload: err
+    });
   });
 };

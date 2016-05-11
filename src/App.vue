@@ -35,12 +35,17 @@ import AddDeveloper from './components/AddDeveloper.vue';
 import UserList from './components/UserList.vue';
 import TotalResult from './components/TotalResult.vue';
 import LocalStorage from './services/localStorage';
+import { getAllDevelopers } from './vuex/actions';
 
   export default {
+    created () {
+      this.getAllDevelopers();
+    },
     vuex: {
       getters: {
         developers: (state) => state.cart.developers
-      }
+      },
+      actions: { getAllDevelopers }
     },
     components: { AddDeveloper, UserList, TotalResult }
   }

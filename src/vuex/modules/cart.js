@@ -1,13 +1,16 @@
 import { get, getAll, add, edit, remove, removeAll } from '../../services/localStorage';
 
 const state = {
-  developers: getAll(),
+  developers: [],
   showError: false,
   errorMessage: '',
   newDeveloper: ''
 };
 
 const mutations = {
+  GET_ALL_DEVELOPERS (state) {
+    state.developers = getAll()
+  },
   ADD_DEVELOPER (state, developer) {
     const dev = Object.assign({}, developer);
     add(dev);
