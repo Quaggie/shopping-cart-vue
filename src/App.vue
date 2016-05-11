@@ -39,7 +39,7 @@ import LocalStorage from './services/localStorage';
   export default {
     vuex: {
       getters: {
-        developers: (state) => state.developers
+        developers: (state) => state.cart.developers
       }
     },
     components: { AddDeveloper, UserList, TotalResult }

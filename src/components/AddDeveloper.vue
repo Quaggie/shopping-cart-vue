@@ -29,9 +29,9 @@
   export default {
     vuex: {
       getters: {
-        showError: (store) => store.showError,
-        errorMessage: (store) => store.errorMessage,
-        newDeveloper: (store) => store.newDeveloper
+        showError: (store) => store.cart.showError,
+        errorMessage: (store) => store.cart.errorMessage,
+        newDeveloper: (store) => store.cart.newDeveloper
       },
       actions: {
         addDeveloper,
