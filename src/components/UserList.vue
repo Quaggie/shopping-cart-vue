@@ -8,11 +8,11 @@
         <th></th>
       </tr>
     </thead>
-    <tbody class="point">
-      <tr @click="goToDevPage(developer)" class="product" v-for="developer in developers" orderBy="developer.username" track-by="$index">
-        <td><img :src="developer.imageUrl" class="img-circle small-pic"></td>
-        <td>{{developer.username}}</td>
-        <td>{{developer.price | currency}}</td>
+    <tbody>
+      <tr class="product point" v-for="developer in developers" orderBy="developer.username" track-by="$index">
+        <td @click="goToDevPage(developer)" ><img :src="developer.imageUrl" class="img-circle small-pic"></td>
+        <td @click="goToDevPage(developer)">{{developer.username}}</td>
+        <td @click="goToDevPage(developer)">{{developer.price | currency}}</td>
         <td><button @click="removeDeveloper(developer)" class="btn btn-danger pull-right">Remove</button></td>
       </tr>
     </tbody>
