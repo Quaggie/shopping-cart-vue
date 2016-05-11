@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr @click="showInfo(developer)" class="product" v-for="developer in developers" orderBy="developer.username" track-by="$index">
+      <tr @click="developerInfo(developer)" class="product" v-for="developer in developers" orderBy="developer.username" track-by="$index">
         <td><img :src="developer.imageUrl" class="img-circle small-pic"></td>
         <td>{{developer.username}}</td>
         <td>{{developer.price | currency}}</td>
@@ -20,13 +20,14 @@
 </template>
 
 <script>
+  import { removeDeveloper, editDeveloper, developerInfo } from '../vuex/actions';
+
   export default {
-    methods: {
-      removeDeveloper (dev) {
-        this.$dispatch('removeDeveloper', dev);
-      },
-      showInfo (dev) {
-        this.$dispatch('showInfo', dev);
+    vuex: {
+      actions : {
+        removeDeveloper,
+        editDeveloper,
+        developerInfo
       }
     },
     props: {

@@ -1,46 +1,38 @@
-export default {
-  save (dev) {
-    return new Promise( (resolve, reject) => {
-      if(localStorage.getItem(dev.username)) {
-        reject('Item já foi salvo previamente');
-      }
-      const item = localStorage.setItem(dev.username, JSON.stringify(dev));
-      resolve('Sucesso ao salvar desenvolvedor!');
-    });
-  },
-  get (dev) {
-    return new Promise( (resolve, reject) => {
-      const item = localStorage.getItem(dev.username);
-      if (!item) reject('Nenhum desenvolvedor encontrado!')
-      resolve(JSON.parse(item));
-    });
-  },
-  getAll () {
-    return new Promise( (resolve, reject) => {
-      const items = Object.keys(localStorage);
-      if (!items.length) reject('Nenhum desenvolvedor encontrado!');
+// RETURNS
 
-      const result = items.map( (i) => JSON.parse(localStorage.getItem(i)));
-      console.log(result);
-      resolve(result);
-    });
-  },
-  remove (dev) {
-    return new Promise( (resolve, reject) => {
-      const item = localStorage.getItem(dev.username);
-      if (!item) reject('Nenhum desenvolvedor encontrado para ser removido!');
+export const get = (dev) => {
+  let item;
+  if (typeof dev === 'string') item = localStorage.getItem(dev);
+  else if (typeof dev === 'object')item = localStorage.getItem(dev.username);
+  if (!item) return undefined;
+  return JSON.parse(item);
+}
 
-      const result = localStorage.removeItem(dev.username);
-      resolve('Desenvolvedor removido com sucesso!');
-    });
-  },
-  removeAll () {
-    return new Promise( (resolve, reject) => {
-      const items = Object.keys(localStorage);
-      if (!items.length) reject('Nenhum desenvolvedor encontrado!');
+export const edit = (dev) => {
+  const item = localStorage.getItem(dev.username);
+  if (!item) return undefined;
+  return JSON.parse(item);
+}
 
-      items.forEach( (i) => localStorage.removeItem(i));
-      resolve('Todos os desenvolvedores removidos!');
-    });
-  }
+export const getAll = () => {
+  if (!localStorage.length) return [];
+
+  const items = Object.keys(localStorage);
+  const result = items.map( (i) => JSON.parse(localStorage.getItem(i)));
+  return result
+}
+
+// NO RETURNS
+
+export const add = (dev) => {
+  if (localStorage.getItem(dev.username)) return dev;
+  localStorage.setItem(dev.username, JSON.stringify(dev));
+}
+
+export const remove = (dev) => {
+  localStorage.removeItem(dev.username);
+}
+
+export const removeAll = () => {
+  localStorage.clear();
 }

@@ -11,10 +11,11 @@
 
 <script>
 export default {
+  props: ['developers'],
   computed: {
     total () {
-      if (this.$parent.developers.length) {
-        const total = this.$parent.developers.map( (dev) => Number(dev.price)).reduce( (prev, curr) => prev + curr, 0);
+      if (this.developers.length) {
+        const total = this.developers.map( (dev) => Number(dev.price)).reduce( (prev, curr) => prev + curr, 0);
         console.log(total);
         return total;
       } else {
