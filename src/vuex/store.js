@@ -7,7 +7,8 @@ Vue.use(Vuex);
 const state = {
   developers: getAll(),
   showError: false,
-  errorMessage: ''
+  errorMessage: '',
+  newDeveloper: ''
 };
 
 const mutations = {
@@ -37,10 +38,14 @@ const mutations = {
     state.showError = true;
     state.errorMessage = msg;
     setTimeout( () => state.showError = false, 4000);
+  },
+  UPDATE_NEW_DEVELOPER (state, dev) {
+    state.newDeveloper = dev;
   }
 }
 
 export default new Vuex.Store({
   state,
-  mutations
+  mutations,
+  strict: process.env.NODE_ENV !== 'production'
 });

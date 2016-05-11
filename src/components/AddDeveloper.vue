@@ -14,9 +14,9 @@
   </alert>
 
   <h2>Add a developer</h2>
-  <form class="form-inline" role="form" @submit.prevent="addDeveloper(developer)">
+  <form class="form-inline" role="form" @submit.prevent="addDeveloper(newDeveloper)">
     <div class="form-group">
-      <input @input="getInput" type="text" placeholder="GitHub Username" class="form-control">
+      <input :value="newDeveloper" @input="updateNewDeveloper" type="text" placeholder="GitHub Username" class="form-control">
     </div>
     <button type="submit" class="btn btn-success">Add</button>
   </form>
@@ -30,19 +30,12 @@
     vuex: {
       getters: {
         showError: (store) => store.showError,
-        errorMessage: (store) => store.errorMessage
+        errorMessage: (store) => store.errorMessage,
+        newDeveloper: (store) => store.newDeveloper
       },
-      actions: { addDeveloper }
-    },
-    data () {
-      return {
-        developer : ''
-      }
-    },
-    methods: {
-      getInput (e) {
-        this.developer = e.target.value;
-        console.log(this.developer)
+      actions: {
+        addDeveloper,
+        updateNewDeveloper: ({ dispatch}, e) => dispatch('UPDATE_NEW_DEVELOPER', e.target.value)
       }
     },
     computed: {

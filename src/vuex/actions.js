@@ -28,8 +28,7 @@ export const addDeveloper = (store, developer) => {
     };
     // Sending it to the store
     store.dispatch('ADD_DEVELOPER', dev);
-    console.log(dev);
-    developer = '';
+    store.dispatch('UPDATE_NEW_DEVELOPER', '');
   })
   .catch( (err) => {
     store.dispatch('SEND_ERROR_MESSAGE', err);
