@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 // RETURNS
 
 export const get = (dev) => {

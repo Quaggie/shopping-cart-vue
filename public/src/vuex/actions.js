@@ -5,11 +5,16 @@ function makeAction (type) {
   return ({ dispatch }, ...args) => dispatch(type, ...args)
 }
 
-export const getAllDevelopers = makeAction('GET_ALL_DEVELOPERS');
 export const developerInfo = makeAction('DEVELOPER_INFO');
 export const removeDeveloper = makeAction('REMOVE_DEVELOPER');
 export const editDeveloper = makeAction('EDIT_DEVELOPER');
 export const removeAllDevelopers = makeAction('REMOVE_ALL_DEVELOPERS');
+
+export const getAllDevelopers = (store) => {
+  return Vue.http.post('/dev/find')
+  .then( (developers) => store.dispatch('GET_ALL_DEVELOPERS', developers))
+  .catch( (err) => store.dispatch('SEND_ERROR_MESSAGE', err));
+}
 
 export const addDeveloper = (store, developer) => {
   if (!developer.trim()) return store.dispatch({ type:'SEND_ERROR_MESSAGE', payload: 'Digite um nome.'});
@@ -27,14 +32,19 @@ export const addDeveloper = (store, developer) => {
       price: parseInt(String(user.score).substring(0, String(user.score).indexOf('.'))),
       imageUrl: user.avatar_url
     };
-    // Sending it to the store
-    store.dispatch({
-      type: 'ADD_DEVELOPER',
-      payload: dev
-    });
-    store.dispatch({
-      type: 'UPDATE_NEW_DEVELOPER',
-      payload:''
+
+    return Vue.http.post('/dev/save', dev)
+    .then( (result) => {
+      console.log(result);
+      // Sending it to the store
+      store.dispatch({
+        type: 'ADD_DEVELOPER',
+        payload: dev
+      });
+      store.dispatch({
+        type: 'UPDATE_NEW_DEVELOPER',
+        payload:''
+      });
     });
   })
   .catch( (err) => {

@@ -6,10 +6,11 @@ const controller = require('./developer.controller')( Developer );
 
 const router = express.Router();
 
-router.get( '/', controller.find );
-router.get( '/:id', controller.findById );
-router.post( '/', controller.save );
-router.post( '/:id', controller.update );
-router.delete( '/:id', controller.remove );
+router.post( '/find', controller.find );
+router.post( '/findByName', controller.findByName );
+router.post( '/save', controller.save );
+router.post( '/update', controller.update );
+router.delete( '/delete', controller.remove );
+router.delete( '/deleteById', controller.removeById );
 
 module.exports = router;

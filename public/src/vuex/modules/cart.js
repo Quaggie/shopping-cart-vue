@@ -8,8 +8,9 @@ const state = {
 };
 
 const mutations = {
-  GET_ALL_DEVELOPERS (state) {
-    state.developers = getAll()
+  GET_ALL_DEVELOPERS (state, {data}) {
+    // state.developers = getAll()
+    state.developers = data;
   },
   ADD_DEVELOPER (state, developer) {
     const dev = Object.assign({}, developer);
