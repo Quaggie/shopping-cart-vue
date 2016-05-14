@@ -21,9 +21,9 @@ const mutations = {
     console.log(get(developer));
   },
   REMOVE_DEVELOPER (state, developer) {
-    const dev = get(developer);
+    // const dev = get(developer);
+    // remove(dev);
     state.developers.$remove(developer);
-    remove(dev);
   },
   EDIT_DEVELOPER (state, developer) {
     let dev = get(developer.username);

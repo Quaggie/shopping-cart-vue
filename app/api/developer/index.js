@@ -10,7 +10,7 @@ router.post( '/find', controller.find );
 router.post( '/findByName', controller.findByName );
 router.post( '/save', controller.save );
 router.post( '/update', controller.update );
-router.delete( '/delete', controller.remove );
-router.delete( '/deleteById', controller.removeById );
+router.delete( '/remove', controller.remove );
+router.delete( '/removeById', controller.removeById );
 
 module.exports = router;

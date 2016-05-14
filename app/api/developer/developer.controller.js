@@ -32,8 +32,8 @@ module.exports = function ( Developer ) {
   };
 
   controller.remove = (req, res) => {
-    Developer.findOne({ username: req.body.username })
-      .then( (developer) => developer.remove())
+    console.log(req.body);
+    Developer.remove({ username: req.body.username })
       .then( () => res.status(200).send('Removido'))
       .catch( (err) => res.status(500).send(err));
   };

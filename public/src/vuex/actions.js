@@ -6,7 +6,6 @@ function makeAction (type) {
 }
 
 export const developerInfo = makeAction('DEVELOPER_INFO');
-export const removeDeveloper = makeAction('REMOVE_DEVELOPER');
 export const editDeveloper = makeAction('EDIT_DEVELOPER');
 export const removeAllDevelopers = makeAction('REMOVE_ALL_DEVELOPERS');
 
@@ -16,8 +15,18 @@ export const getAllDevelopers = (store) => {
   .catch( (err) => store.dispatch('SEND_ERROR_MESSAGE', err));
 }
 
+export const removeDeveloper = (store, developer) => {
+  if (!developer) return store.dispatch('SEND_ERROR_MESSAGE', 'Desenvolvedor não encontrado!');
+  const jsonDev = JSON.parse(JSON.stringify(developer));
+  console.log(jsonDev);
+
+  return Vue.http.post('/dev/remove', jsonDev)
+  .then( (result) => store.dispatch('REMOVE_DEVELOPER', developer))
+  .catch( (err) => store.dispatch('SEND_ERROR_MESSAGE', err));
+}
+
 export const addDeveloper = (store, developer) => {
-  if (!developer.trim()) return store.dispatch({ type:'SEND_ERROR_MESSAGE', payload: 'Digite um nome.'});
+  if (!developer.trim()) return store.dispatch('SEND_ERROR_MESSAGE','Digite um nome.');
 
   return Vue.http.get(`https://api.github.com/search/users?q=${developer}`)
   .then( (result) => {

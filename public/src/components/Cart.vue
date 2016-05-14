@@ -41,6 +41,9 @@ import { getAllDevelopers } from '../vuex/actions';
     created () {
       this.getAllDevelopers();
     },
+    ready () {
+      console.log(this.developers);
+    },
     vuex: {
       getters: {
         developers: ({cart}) => cart.developers
