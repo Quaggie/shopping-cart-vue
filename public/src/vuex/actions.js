@@ -20,7 +20,7 @@ export const removeDeveloper = (store, developer) => {
   const jsonDev = JSON.parse(JSON.stringify(developer));
   console.log(jsonDev);
 
-  return Vue.http.post('/dev/remove', jsonDev)
+  return Vue.http.delete('/dev/remove', jsonDev)
   .then( (result) => store.dispatch('REMOVE_DEVELOPER', developer))
   .catch( (err) => store.dispatch('SEND_ERROR_MESSAGE', err));
 }
